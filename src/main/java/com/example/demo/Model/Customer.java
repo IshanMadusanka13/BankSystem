@@ -1,35 +1,36 @@
 package com.example.demo.Model;
 
+import com.example.demo.Custom.mobileValidate;
+import com.example.demo.Custom.nicValidate;
 import com.example.demo.Enumset.Gender;
+import com.example.demo.Enumset.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
-import com.example.demo.Custom.mobileValidate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "customer")
-public class Customer implements Serializable {
+@Entity
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cid")
-    private int customerid;
+    private int cid;
 
     @Column(name = "name")
     @NotBlank(message = "Name Required")
     private String name;
 
     @Column(name = "nic")
+    @nicValidate
     @NotBlank(message = "NIC Required")
     private String nic;
 
@@ -58,6 +59,7 @@ public class Customer implements Serializable {
     @NotBlank(message = "Occupation Required")
     private String occupation;
 
-    @Column(name = "status")
-    private int status;
+    @Column(name = "status", columnDefinition = "CHAR")
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 }

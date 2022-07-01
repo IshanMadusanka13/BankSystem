@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.CustomerDTO;
 import com.example.demo.Model.Customer;
 import com.example.demo.Services.CustomerService;
 import com.example.demo.repository.CustomerRepository;
@@ -13,11 +14,15 @@ import java.util.NoSuchElementException;
 @RequestMapping(value="/customer")
 public class CustomerController {
 
+    private CustomerService customerService;
+
     @Autowired
-    CustomerService customerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping(value = "/all")
-    public List<Customer> getAll(){return customerService.getAll();}
+    public List<CustomerDTO> getAll(){return customerService.getAll();}
 
 
     @GetMapping(value = "/search/{nic}")
@@ -25,13 +30,15 @@ public class CustomerController {
 
 
     @PostMapping(value = "/save")
-    public String addCustomer(@RequestBody Customer customer){return customerService.addCustomer(customer);}
+    public String addCustomer(@RequestBody CustomerDTO customerDTO){return customerService.addCustomer(customerDTO);}
 
 
-    @PostMapping(value = "/update/{nic}")
-    public String updateCustomer(@RequestBody Customer customer, @PathVariable String nic){return customerService.updateCustomer(customer,nic);}
+    @PutMapping(value = "/update/{nic}")
+    public String updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable String nic){return customerService.updateCustomer(customerDTO,nic);}
 
 
-    @PostMapping(value = "/delete/{nic}")
-    public String deleteCustomer(@RequestBody Customer customer, @PathVariable String nic){return customerService.deleteCustomer(customer,nic);}
+    @DeleteMapping(value = "/delete/{nic}")
+    public String deleteCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable String nic){return customerService.deleteCustomer(customerDTO,nic);}
+
 }
+

@@ -44,5 +44,6 @@ public class Beneficiary implements Serializable {
     @Column(name = "relationship")
     private String relationship;
 
-    private int cid;
+    @ManyToOne
+    private Customer customer;
 }

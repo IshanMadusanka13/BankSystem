@@ -9,7 +9,7 @@ public class MobileValidater implements ConstraintValidator<mobileValidate,Strin
 
     @Override
     public boolean isValid(String mobile, ConstraintValidatorContext context) {
-        Pattern p=Pattern.compile("(\\+94|0)?[0-9]{9}");
+        Pattern p=Pattern.compile("(\\+94|0)[0-9]{9}");
         Matcher m=p.matcher(mobile);
         return (m.find() && m.group().equals(mobile));
     }

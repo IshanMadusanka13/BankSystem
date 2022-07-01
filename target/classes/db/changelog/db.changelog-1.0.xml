@@ -5,4 +5,158 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+    <changeSet id="01" author="Ishan">
+        <createTable tableName="customer">
+
+            <column name="cid" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="nic" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gender" type="CHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="dob" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="mobile" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="occupation" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="CHAR">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="beneficiary">
+
+            <column name="bid" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="nic" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="mobile" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="relationship" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cid" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+
+        <createTable tableName="savingsaccount">
+
+            <column name="said" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="accountno" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="interestrate" type="Double">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="opendate" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="balance" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cid" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="fixeddeposit">
+
+            <column name="fid" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="accountNo" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="interestrate" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="opendate" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="duration" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="balance" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cid" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="beneficiary" baseColumnNames="cid" constraintName="beneficiary_fk"
+                                 referencedTableName="customer" referencedColumnNames="cid"/>
+
+        <addForeignKeyConstraint baseTableName="fixeddeposit" baseColumnNames="cid" constraintName="fixed_fk"
+                                 referencedTableName="customer" referencedColumnNames="cid"/>
+
+        <addForeignKeyConstraint baseTableName="savingsaccount" baseColumnNames="cid" constraintName="savings_fk"
+                                 referencedTableName="customer" referencedColumnNames="cid"/>
+
+
+
+    </changeSet>
 </databaseChangeLog>
