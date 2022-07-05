@@ -62,11 +62,8 @@ public class CustomerService {
 
     //update
     public String updateCustomer(CustomerDTO customerDTO, String nic){
-        CustomerDTO c= modelMapper.map(customerRepository.findByNic(nic),CustomerDTO.class);
-        if (c==null){
-            log.error("Tried to update a non-existing customer");
-            throw new NoSuchElementException("customer not found with the NIC : "+customerDTO.getNic());
-        }else{
+        try {
+            CustomerDTO c= modelMapper.map(customerRepository.findByNic(nic),CustomerDTO.class);
             c.setName(customerDTO.getName());
             c.setDob(customerDTO.getDob());
             c.setAddress(customerDTO.getAddress());
@@ -77,26 +74,28 @@ public class CustomerService {
             customerRepository.save(modelMapper.map(c,Customer.class));
             log.info("Updated a customer");
             return "Customer Updated Successfully";
+        }catch (IllegalArgumentException e){
+            log.error("Tried to update a non-existing customer");
+            throw new NoSuchElementException("customer not found with the NIC : "+customerDTO.getNic());
         }
     }
 
     //Delete
     public String deleteCustomer(CustomerDTO customerDTO, String nic){
-        CustomerDTO c= modelMapper.map(customerRepository.findByNic(nic),CustomerDTO.class);
-        if (c==null){
-            log.error("Tried to delete a non-existing customer");
-            throw new NoSuchElementException("customer not found with the NIC : "+customerDTO.getNic());
-        }else{
+        try {
+            CustomerDTO c= modelMapper.map(customerRepository.findByNic(nic),CustomerDTO.class);
             c.setStatus(Status.INACTIVE);
             customerRepository.save(modelMapper.map(c,Customer.class));
             log.info("Deleted a customer");
             return "Customer Deleted Successfully";
+        }catch (IllegalArgumentException e){
+            log.error("Tried to delete a non-existing customer");
+            throw new NoSuchElementException("customer not found with the NIC : "+customerDTO.getNic());
         }
     }
 
     /*
-    @PostMapping(value = "/deletef/{nic}")
-    public String deletefCustomer(@RequestBody Customer customer, @PathVariable String nic){
+    public String deletefCustomer(Customer customer, String nic){
         Customer c= customerRepository.findByNic(nic);
         if (c==null){
             throw new NoSuchElementException("customer not found with the id : "+customer.getNic());

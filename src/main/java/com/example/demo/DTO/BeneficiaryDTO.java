@@ -1,11 +1,15 @@
 package com.example.demo.DTO;
 
+import com.example.demo.Custom.mobileValidate;
+import com.example.demo.Custom.nicValidate;
 import com.example.demo.Model.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -25,6 +29,7 @@ public class BeneficiaryDTO {
     private String name;
 
     @NotBlank(message = "NIC is Required")
+    @nicValidate
     @Column(name = "nic")
     private String nic;
 
@@ -33,10 +38,12 @@ public class BeneficiaryDTO {
     private String address;
 
     @NotBlank(message = "Mobile is Required")
+    @mobileValidate
     @Column(name="mobile")
     private String mobile;
 
     @NotBlank(message = "Email is Required")
+    @Email
     @Column(name="email")
     private String email;
 
@@ -44,7 +51,8 @@ public class BeneficiaryDTO {
     @Column(name = "relationship")
     private String relationship;
 
-    @ManyToOne
-    private Customer customer;
+    @ManyToOne(targetEntity = Customer.class)
+    @JoinColumn(name = "cid")
+    private Customer cid;
 
 }
